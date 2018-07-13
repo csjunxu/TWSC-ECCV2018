@@ -1,7 +1,24 @@
+%-------------------------------------------------------------------------------------------------------------
+% This is an implementation of the TWSC algorithm for real-world image denoising
+% 
+% Author:  Jun Xu, csjunxu@comp.polyu.edu.hk / nankaimathxujun@gmail.com
+%          The Hong Kong Polytechnic University
+% 
+% Please refer to the following paper if you find this code helps:
+%
+% @article{TWSC_ECCV2018,
+% 	author = {Jun Xu and Lei Zhang and David Zhang},
+% 	title = {A Trilateral Weighted Sparse Coding Scheme for Real-World Image Denoising},
+% 	journal = {ECCV},
+% 	year = {2018}
+% }
+%
+% Please see the file License.txt for the license governing this code.
+%-------------------------------------------------------------------------------------------------------------
 clear;
-GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2018 Denoising\cc_Results\Real_ccnoise_denoised_Part\';
+GT_Original_image_dir = 'Real_ccnoise_denoised_Part/';
 GT_fpath = fullfile(GT_Original_image_dir, '*mean.png');
-TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2018 Denoising\cc_Results\Real_ccnoise_denoised_Part\';
+TT_Original_image_dir = 'Real_ccnoise_denoised_Part';
 TT_fpath = fullfile(TT_Original_image_dir, '*real.png');
 % GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2018 Denoising\PolyU\';
 % GT_fpath = fullfile(GT_Original_image_dir, '*mean.JPG');
