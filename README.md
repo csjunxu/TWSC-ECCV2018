@@ -29,7 +29,7 @@ Code will be updated on https://github.com/csjunxu/TWSC-ECCV2018
 Data
 ------------
 Please download the data from corresponding addresses.
-1. cleanimages: 20 high quality color images from commonly used natural images
+1. cleanimages: 20 high quality commonly used natural gray scale images
 
 2. nc: real noisy images with no ''ground truth''
                         This dataset can be found at http://demo.ipol.im/demo/125/
