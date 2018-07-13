@@ -47,6 +47,7 @@ Please download the data from corresponding addresses.
 
 [1] A Holistic Approach to Cross-Channel Image Noise Modeling and its Application to Image Denoising. 
      Seonghyeon Nam*, Youngbae Hwang*, Yasuyuki Matsushita, Seon Joo Kim. CVPR 2016.
+
 [2] Benchmarking Denoising Algorithms with Real Photographs. Tobias Plötz and Stefan Roth. CVPR 2017.
 
 Dependency
