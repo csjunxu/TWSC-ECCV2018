@@ -1,6 +1,5 @@
-# TWSC-ECCV2018
-A Trilateral Weighted Sparse Coding Scheme for Real-World Image Denoising, ECCV 2018.
 % ===============================================================
+
 The code in this package implements the Trilateral Weighted Sparse Coding Scheme for real color image denoising as described in the following paper:
 
 @article{TWSC_ECCV2018,
@@ -15,6 +14,7 @@ Please see the file License.txt for the license governing this code.
 
   Version:       1.0 (13/07/2018), see ChangeLog.txt
   Contact:       Jun Xu <csjunxu@comp.polyu.edu.hk, nankaimathxujun@gmail.com>
+
 % ===============================================================
 
 Code
