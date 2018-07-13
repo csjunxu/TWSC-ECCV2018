@@ -4,12 +4,13 @@
 % 
 % Author:  Jun Xu, csjunxu@comp.polyu.edu.hk / nankaimathxujun@gmail.com
 %          The Hong Kong Polytechnic University
-% 
+%
 % Please refer to the following paper if you find this code helps:
 %
 % @article{TWSC_ECCV2018,
 % 	author = {Jun Xu and Lei Zhang and David Zhang},
-% 	title = {A Trilateral Weighted Sparse Coding Scheme for Real-World Image Denoising},
+% 	title = {A Trilateral Weighted Sparse Coding Scheme for Real-World Image
+%            Denoising},
 % 	journal = {ECCV},
 % 	year = {2018}
 % }
