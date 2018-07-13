@@ -17,6 +17,10 @@ Please see the file License.txt for the license governing this code.
   Contact:       Jun Xu <csjunxu@comp.polyu.edu.hk, nankaimathxujun@gmail.com>
 % ===============================================================
 
+Code
+------------
+Code will be updated on https://github.com/csjunxu/TWSC-ECCV2018
+
 Data
 ------------
 Please download the data from corresponding addresses.

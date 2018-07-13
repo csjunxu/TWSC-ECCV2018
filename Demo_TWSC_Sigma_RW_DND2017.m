@@ -16,11 +16,11 @@
 % Please see the file License.txt for the license governing this code.
 %-------------------------------------------------------------------------------------------------------------
 clear;
-Original_image_dir = 'dnd_2017/images_srgb/';
+Original_image_dir = 'dnd/images_srgb/';
 fpath = fullfile(Original_image_dir, '*.mat');
 im_dir  = dir(fpath);
 im_num = length(im_dir);
-load 'dnd_2017/info.mat';
+load 'dnd/info.mat';
 
 method = 'TWSC';
 dataset = 'dnd';
