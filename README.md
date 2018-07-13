@@ -24,7 +24,7 @@ Please download the data from corresponding addresses.
 
 2. nc: real noisy images with no ''ground truth''
                         This dataset can be found at http://demo.ipol.im/demo/125/
-3. Real_ccnoise_denoised_part: 15 cropped real noisy images from CC [1]. 
+3. cc: 15 cropped real noisy images from CC [1]. 
                         This dataset can be found at  http://snam.ml/research/ccnoise
                         The smaller 15 cropped images can be found on in the directory 
                         ''Real_ccnoise_denoised_part'' of 
