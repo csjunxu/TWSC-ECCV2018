@@ -4,13 +4,13 @@ The code in this package implements the Trilateral Weighted Sparse Coding Scheme
 
 @article{TWSC_ECCV2018, 
 
-author = {Jun Xu and Lei Zhang and David Zhang}, 
+         author = {Jun Xu and Lei Zhang and David Zhang}, 
 
-title = {A Trilateral Weighted Sparse Coding Scheme for Real-World Image Denoising}, 
+         title = {A Trilateral Weighted Sparse Coding Scheme for Real-World Image Denoising}, 
 
-journal = {ECCV},
+         journal = {ECCV},
  
-year = {2018} 
+         year = {2018} 
 
 }
 
