@@ -3,10 +3,15 @@
 The code in this package implements the Trilateral Weighted Sparse Coding Scheme for real color image denoising as described in the following paper:
 
 @article{TWSC_ECCV2018, 
+
 author = {Jun Xu and Lei Zhang and David Zhang}, 
+
 title = {A Trilateral Weighted Sparse Coding Scheme for Real-World Image Denoising}, 
-journal = {ECCV}, 
+
+journal = {ECCV},
+ 
 year = {2018} 
+
 }
 
 Please cite the paper if you feel this code useful in your research.
