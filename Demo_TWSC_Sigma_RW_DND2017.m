@@ -28,58 +28,47 @@ Par.display = 0;
 Par.delta = 0;
 Par.nlspgap = 0; %10
 
-for mu = [1.1]
-    Par.mu = mu;
-    for rho = [0.5]
-        Par.rho = rho;
-        for lambda1 = [0]
-            Par.lambda1 = lambda1;
-            for lambda2 = [3]
-                Par.lambda2 = lambda2;
-                for nlspini = [50 60 70 80 90]
-                    Par.nlspini = nlspini;
-                    % set Parameters
-                    % record all the results in each iteration
-                    Par.PSNR = zeros(Par.Outerloop, im_num*20, 'double');
-                    Par.SSIM = zeros(Par.Outerloop, im_num*20, 'double');
-                    CCPSNR = [];
-                    CCSSIM = [];
-                    for i = 1 :im_num
-                        Par.image = i;
-                        load(fullfile(Original_image_dir, im_dir(i).name));
-                        S = regexp(im_dir(i).name, '\.', 'split');
-                        [h,w,ch] = size(InoisySRGB);
-                        for j = 1:size(info(1).boundingboxes,1)
-                            Par.nlsp = Par.nlspini;  % number of non-local patches
-                            IMinname = [S{1} '_' num2str(j)];
-                            bb = info(i).boundingboxes(j,:);
-                            Par.nim = InoisySRGB(bb(1):bb(3), bb(2):bb(4),:);
-                            Par.I = Par.nim;
-                            % noise estimation
-                            for c = 1:ch
-                                % Par.nSig0(c) = NoiseLevel(Par.nim(:, :, c));
-                                Par.nSig(c) = NoiseEstimation(Par.nim(:, :, c)*255, Par.ps)/255;
-                            end
-                            % initial PSNR and SSIM
-                            fprintf('%s: \n', IMinname);
-                            % denoising
-                            t1=clock;
-                            [IMout, Par]  =  WLSWSC_Sigma_WAR(Par);
-                            t2=clock;
-                            etime(t2,t1)
-                            alltime(Par.image)  = etime(t2, t1);
-                            % calculate the PSNR
-                            Par.PSNR(Par.Outerloop, Par.image)  =   csnr( IMout*255, Par.I*255, 0, 0 );
-                            Par.SSIM(Par.Outerloop, Par.image)      =  cal_ssim( IMout*255, Par.I*255, 0, 0 );
-                            %% output
-                            fprintf('The final PSNR = %2.4f, SSIM = %2.4f. \n', Par.PSNR(Par.Outerloop, Par.image), Par.SSIM(Par.Outerloop, Par.image));
-                            %% output
-                            IMoutname = sprintf([write_sRGB_dir '/' method '_DND_l1_' num2str(lambda1) '_l2_' num2str(lambda2) '_N' num2str(nlspini) '_' IMinname '.png']);
-                            imwrite(IMout, IMoutname);
-                        end
-                    end
-                end
-            end
+Par.lambda1 = 0;
+Par.lambda2 = 4.9;
+
+Par.nlspini = 70;
+% set Parameters
+% record all the results in each iteration
+Par.PSNR = zeros(Par.Outerloop, im_num*20, 'double');
+Par.SSIM = zeros(Par.Outerloop, im_num*20, 'double');
+CCPSNR = [];
+CCSSIM = [];
+for i = 1 :im_num
+    Par.image = i;
+    load(fullfile(Original_image_dir, im_dir(i).name));
+    S = regexp(im_dir(i).name, '\.', 'split');
+    [h,w,ch] = size(InoisySRGB);
+    for j = 1:size(info(1).boundingboxes,1)
+        Par.nlsp = Par.nlspini;  % number of non-local patches
+        IMinname = [S{1} '_' num2str(j)];
+        bb = info(i).boundingboxes(j,:);
+        Par.nim = InoisySRGB(bb(1):bb(3), bb(2):bb(4),:);
+        Par.I = Par.nim;
+        % noise estimation
+        for c = 1:ch
+            % Par.nSig0(c) = NoiseLevel(Par.nim(:, :, c));
+            Par.nSig(c) = NoiseEstimation(Par.nim(:, :, c)*255, Par.ps)/255;
         end
+        % initial PSNR and SSIM
+        fprintf('%s: \n', IMinname);
+        % denoising
+        t1=clock;
+        [IMout, Par]  =  TWSC_Sigma_WAR(Par);
+        t2=clock;
+        etime(t2,t1)
+        alltime(Par.image)  = etime(t2, t1);
+        % calculate the PSNR
+        Par.PSNR(Par.Outerloop, Par.image)  =   csnr( IMout*255, Par.I*255, 0, 0 );
+        Par.SSIM(Par.Outerloop, Par.image)      =  cal_ssim( IMout*255, Par.I*255, 0, 0 );
+        %% output
+        fprintf('The final PSNR = %2.4f, SSIM = %2.4f. \n', Par.PSNR(Par.Outerloop, Par.image), Par.SSIM(Par.Outerloop, Par.image));
+        %% output
+        IMoutname = sprintf([write_sRGB_dir '/' method '_DND_l1_' num2str(lambda1) '_l2_' num2str(lambda2) '_N' num2str(nlspini) '_' IMinname '.png']);
+        imwrite(IMout, IMoutname);
     end
 end

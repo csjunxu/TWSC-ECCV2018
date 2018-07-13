@@ -1,4 +1,4 @@
-function       blk_arr = Block_Matching0( X, Par)
+function       blk_arr = Block_Matching_RW( X, Par)
 % record the indexs of patches similar to the seed patch
 blk_arr   =  zeros(Par.nlsp, Par.lenrc, 'double');
 for  i  =  1 : Par.lenrc

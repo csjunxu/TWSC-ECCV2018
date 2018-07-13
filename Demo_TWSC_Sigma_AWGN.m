@@ -1,10 +1,10 @@
 %-------------------------------------------------------------------------------------------------------------
 % This is an implementation of the TWSC algorithm for additive white Gaussian noise
 % noise removal.
-% 
+%
 % Author:  Jun Xu, csjunxu@comp.polyu.edu.hk / nankaimathxujun@gmail.com
 %          The Hong Kong Polytechnic University
-% 
+%
 % Please refer to the following paper if you find this code helps:
 %
 % @article{TWSC_ECCV2018,
@@ -24,10 +24,10 @@ im_dir  = dir(fpath);
 im_num = length(im_dir);
 
 method = 'TWSC';
-writematpath = [method '/Results_AWGN/'];
-writeimagepath  = [writematpath method '/'];
-if ~isdir(writeimagepath)
-    mkdir(writeimagepath);
+write_MAT_dir = [method '/Results_AWGN/'];
+write_sRGB_dir  = [write_MAT_dir method '/'];
+if ~isdir(write_sRGB_dir)
+    mkdir(write_sRGB_dir);
 end
 for nSig = [15 25 35 50 75]
     %% Parameters
@@ -97,17 +97,19 @@ for nSig = [15 25 35 50 75]
         % calculate the PSNR
         Par.PSNR(Par.outerIter, Par.image)  =   csnr( im_out*255, Par.I*255, 0, 0 );
         Par.SSIM(Par.outerIter, Par.image)      =  cal_ssim( im_out*255, Par.I*255, 0, 0 );
-        imname = sprintf([writeimagepath method '_nSig' num2str(nSig) '_oIte' num2str(Par.outerIter) '_iIte' num2str(Par.innerIter) '_ps' num2str(Par.ps) '_step' num2str(Par.step) '_nlspini' num2str(Par.nlspini) '_nlspgap' num2str(Par.nlspgap) '_delta' num2str(delta) '_l1' num2str(lambda1) '_l2' num2str(lambda2) '_' im_dir(i).name]);
+        imname = sprintf([write_sRGB_dir method '_nSig' num2str(nSig) '_oIte' num2str(Par.outerIter) '_iIte' num2str(Par.innerIter) '_ps' num2str(Par.ps) '_step' num2str(Par.step) '_nlspini' num2str(Par.nlspini) '_nlspgap' num2str(Par.nlspgap) '_delta' num2str(Par.delta) '_l1' num2str(Par.lambda1) '_l2' num2str(Par.lambda2) '_' im_dir(i).name]);
         imwrite(im_out,imname);
         fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n',im_dir(i).name, Par.PSNR(Par.outerIter, Par.image),Par.SSIM(Par.outerIter, Par.image)     );
     end
-    mPSNR=mean(Par.PSNR(end,:),2);
-    mSSIM=mean(Par.SSIM(end,:),2);
+    PSNR = Par.PSNR(end,:);
+    mPSNR=mean(PSNR,2);
+    SSIM = Par.SSIM(end,:);
+    mSSIM=mean(SSIM,2);
     mT512 = mean(T512);
     sT512 = std(T512);
     mT256 = mean(T256);
     sT256 = std(T256);
     fprintf('The average PSNR = %2.4f, SSIM = %2.4f. \n', mPSNR,mSSIM);
-    name = sprintf([writematpath method '_nSig' num2str(nSig) '_oIte' num2str(Par.outerIter) '_iIte' num2str(Par.innerIter) '_ps' num2str(Par.ps) '_step' num2str(Par.step) '_nlspini' num2str(Par.nlspini) '_nlspgap' num2str(Par.nlspgap) '_delta' num2str(delta) '_l1' num2str(lambda1) '_l2' num2str(lambda2) '.mat']);
+    name = sprintf([write_MAT_dir method '_nSig' num2str(nSig) '_oIte' num2str(Par.outerIter) '_iIte' num2str(Par.innerIter) '_ps' num2str(Par.ps) '_step' num2str(Par.step) '_nlspini' num2str(Par.nlspini) '_nlspgap' num2str(Par.nlspgap) '_delta' num2str(Par.delta) '_l1' num2str(Par.lambda1) '_l2' num2str(Par.lambda2) '.mat']);
     save(name,'nSig','PSNR','SSIM','mPSNR','mSSIM','mT512','sT512','mT256','sT256');
 end

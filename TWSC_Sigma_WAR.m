@@ -28,8 +28,7 @@ for ite  =  1 : Par.Outerloop
     if mod(ite-1, Par.Innerloop)==0
         Par.nlsp = max(Par.nlspgap, Par.nlsp - Par.nlspgap);
         % searching  non-local patches
-        blk_arr = Block_Matching0( Y, Par );
-        % [blk_arr, wei_arr] = Block_Matching( Y, Par );
+        blk_arr = Block_Matching_RW( Y, Par );
     end
     % Weighted Sparse Coding
     Y_hat = zeros(Par.ps2ch, Par.maxrc, 'double');
