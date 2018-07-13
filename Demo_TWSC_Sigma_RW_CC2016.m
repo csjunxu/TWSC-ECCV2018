@@ -45,11 +45,9 @@ Par.Innerloop = 2;
 Par.maxIter = 10;
 Par.maxrho = 100;
 Par.nlspini = 70;
-Par.model = 1;
 Par.display = 1;
 Par.delta = 0;
 Par.nlspgap = 0;
-
 Par.lambda1 = 0;
 Par.lambda2 = 4.9;
 
@@ -74,7 +72,7 @@ for i = 1 : im_num
     fprintf('%s: \n', TT_im_dir(i).name);
     fprintf('The initial PSNR = %2.4f, SSIM = %2.4f. \n', csnr( Par.nim*255, Par.I*255, 0, 0 ), cal_ssim( Par.nim*255, Par.I*255, 0, 0 ));
     % denoising
-    [IMout, Par]  =  TWSC_Sigma_WAR(Par);
+    [IMout, Par]  =  TWSC_Sigma_RW(Par);
     % calculate the PSNR
     Par.PSNR(Par.Outerloop, Par.image)  =   csnr( IMout*255, Par.I*255, 0, 0 );
     Par.SSIM(Par.Outerloop, Par.image)      =  cal_ssim( IMout*255, Par.I*255, 0, 0 );

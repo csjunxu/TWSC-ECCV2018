@@ -1,4 +1,4 @@
-function  [C] =  W3SC_ADMM( Y, D, S, W1, W2, Par )
+function  [C] =  TWSC_ADMM( Y, D, S, W1, W2, Par )
 % This routine solves the following weighted nuclear norm optimization problem with column weights,
 %
 % min |W1(Y-DSC)W2|_F,2 + |Z|_1 s.t.  C=Z
@@ -10,6 +10,7 @@ function  [C] =  W3SC_ADMM( Y, D, S, W1, W2, Par )
 
 tol = 1e-8;
 Par.maxrho = 100;
+Par.maxIter = 10;
 Par.rho = 0.5;
 Par.mu = 1.1;
 Par.display = 0;

@@ -10,7 +10,7 @@ for ite  =  1 : par.outerIter
     %     % iterative regularization
     im_out = im_out+par.delta*(par.nim - im_out);
     % image to patches and estimate local noise variance
-    Y = Image2PatchNew( im_out, par );
+    Y = Image2Patch( im_out, par );
     % estimation of noise variance
     dif = mean( mean( mean( (par.nim-im_out).^2 ) ) );
     par.sigma = sqrt( abs( par.nSig^2 - dif ) );
