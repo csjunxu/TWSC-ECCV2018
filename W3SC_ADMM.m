@@ -10,8 +10,8 @@ function  [C] =  W3SC_ADMM( Y, D, S, W1, W2, Par )
 
 tol = 1e-8;
 Par.maxrho = 100;
-% Par.rho = 0.5;
-% Par.mu = 1.1;
+Par.rho = 0.5;
+Par.mu = 1.1;
 Par.display = 0;
 % Initializing optimization variables
 C = zeros(size(S, 1), size(Y, 2));
@@ -35,16 +35,14 @@ while iter < Par.maxIter
     E = S' * D' * diag(W1.^2) * Y + 0.5 * (Par.rho * Z - U) * W2inv;
     C = sylvester(A, B, E);
     
-    %     % faster solution
+    %     %% faster solution
     %     [Ua, Sa, ~] = svd(A);
     %     I1 = eye(size(A, 2));
     %     I2 = eye(size(B, 1));
     %     K = kron(I1, A) + kron(B', I2);
     %     invK = 1./diag(K);
-    %
     %     UTE = Ua'*E;
     %     vecUTE = UTE(:);
-    %
     %     vecUTC = invK .* vecUTE;
     %     MatvecUTC = reshape(vecUTC, [size(UTE, 1) size(UTE, 2)]);
     %     C = Ua*MatvecUTC;

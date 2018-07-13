@@ -23,13 +23,12 @@ for ite  =  1 : Par.outerIter
     if mod(ite-1, Par.innerIter)==0
         Par.nlsp = max(Par.nlspgap, Par.nlsp - Par.nlspgap);
         % searching  non-local patches
-        %         blk_arr = Block_Matching0( Y, Par );
         blk_arr = Block_Matching( Y, Par );
         if ite == 1
             SigmaCol = Par.nSig * ones(size(SigmaCol));
         end
     end
-    % Weighted Sparse Coding
+    % Trilateral Weighted Sparse Coding
     Y_hat = zeros(Par.ps2ch, Par.maxrc, 'double');
     W_hat = zeros(Par.ps2ch, Par.maxrc, 'double');
     for i = 1:Par.lenrc
@@ -53,14 +52,14 @@ for ite  =  1 : Par.outerIter
             % update Y
             nDCnlYhat = D * C;
         elseif Par.model == 1 && Par.lambda1 ~= 0
-            W1 = exp( - Par.lambda1*mean(SigmaRow(:, index), 2)); % max?
+            W1 = exp( - Par.lambda1*mean(SigmaRow(:, index), 2)); % mean or max?
             S = diag(S);
             % min |Z|_1 + |W1(Y-DSC)W2|_F,2  s.t.  C=Z
             C = W3SC_ADMM( nDCnlY, D, S, W1, W2, Par );
             % update Y
             nDCnlYhat = D * S * C;
         elseif Par.model == 2 && Par.lambda1 ~= 0
-            W1 = exp( - Par.lambda1*mean(SigmaRow(:, index), 2)); % max?
+            W1 = exp( - Par.lambda1*mean(SigmaRow(:, index), 2)); % mean or max?
             S = diag(S);
             % min |C|_2 + |W1(Y-DSC)W2|_F,2
             % Solve Sylvester equation AX + XB = E for X
