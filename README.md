@@ -41,7 +41,7 @@ Please download the data from corresponding addresses.
                                                 The *real.png are noisy images;
                                                 The *mean.png are "ground truth" images;
                                                 The *ours.png are images denoised by CC.
-4. dnd_2017: The Darmstadt Noise Dataset [2] consists of 50 pairs of real noisy images, 
+4. dnd: The Darmstadt Noise Dataset [2] consists of 50 pairs of real noisy images, 
              each images provides 50 crops, resulting overall 1,000 crops provided on
              https://noise.visinf.tu-darmstadt.de/
 
