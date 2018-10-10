@@ -15,7 +15,7 @@ for ite  =  1 : Par.outerIter
     Y = Image2Patch( im_out, Par );
     % estimate local noise variance, par.lambdals is put here since the MAP
     % and Bayesian rules
-    if (Par.model == 1 || Par.model == 2) && Par.lambda1 ~= 0
+    if Par.lambda1 ~= 0
         SigmaRow = (NY-Y).^2;
     end
     SigmaCol = Par.lambda2 * sqrt(abs(repmat(Par.nSig^2, 1, size(Y,2)) - mean((NY - Y).^2))); %Estimated Local Noise Level

@@ -15,7 +15,7 @@ for ite  =  1 : Par.Outerloop
     % image to patches
     Y = Image2Patch( im_out, Par );
     % estimate local noise variance, par.lambdals is put here since the MAP and Bayesian rules
-    if (Par.model == 1 || Par.model == 2) && Par.lambda1 ~= 0
+    if Par.lambda1 ~= 0
         if ite == 1
             SigmaRow = zeros(size(NY));
         else
