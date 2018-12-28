@@ -2,17 +2,12 @@
 
 The code in this package implements the Trilateral Weighted Sparse Coding Scheme for real color image denoising as described in the following paper:
 
-@article{TWSC_ECCV2018, 
-
-         author = {Jun Xu and Lei Zhang and David Zhang}, 
-
-         title = {A Trilateral Weighted Sparse Coding Scheme for Real-World Image Denoising}, 
-
-         journal = {ECCV},
- 
-         year = {2018} 
-
-}
+> @article{TWSC_ECCV2018, 
+>         author = {Jun Xu and Lei Zhang and David Zhang}, 
+>         title = {A Trilateral Weighted Sparse Coding Scheme for Real-World Image Denoising}, 
+>         journal = {ECCV},
+>         year = {2018} 
+>}
 
 Please cite the paper if you feel this code useful in your research.
 Please see the file License.txt for the license governing this code.
@@ -48,7 +43,7 @@ Please download the data from corresponding addresses.
 [1] A Holistic Approach to Cross-Channel Image Noise Modeling and its Application to Image Denoising. 
      Seonghyeon Nam*, Youngbae Hwang*, Yasuyuki Matsushita, Seon Joo Kim. CVPR 2016.
 
-[2] Benchmarking Denoising Algorithms with Real Photographs. Tobias Plötz and Stefan Roth. CVPR 2017.
+[2] Benchmarking Denoising Algorithms with Real Photographs. Tobias PlÃ¶tz and Stefan Roth. CVPR 2017.
 
 Dependency
 ------------
