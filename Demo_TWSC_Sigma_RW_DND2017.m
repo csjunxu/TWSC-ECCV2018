@@ -16,37 +16,38 @@
 % Please see the file License.txt for the license governing this code.
 %-------------------------------------------------------------------------------------------------------------
 clear;
-Original_image_dir = 'dnd/images_srgb/';
+Original_image_dir = '../dnd_2017/images_srgb/';
 fpath = fullfile(Original_image_dir, '*.mat');
 im_dir  = dir(fpath);
 im_num = length(im_dir);
-load 'dnd/info.mat';
+load '../dnd_2017/info.mat';
 
 method = 'TWSC';
-dataset = 'dnd';
+dataset = 'dnd_2017';
 % write image directory
-write_MAT_dir = [dataset '_Results/'];
+write_MAT_dir = ['../' dataset '_Results/'];
 write_sRGB_dir = [write_MAT_dir method];
 if ~isdir(write_sRGB_dir)
     mkdir(write_sRGB_dir)
 end
 
-% Parameters
-Par.ps = 6;        % patch size
+% set parameters
+Par.ps   = 6;        % patch size
 Par.step = 3;       % the step of two neighbor patches
-Par.win = 20;   % size of window around the patch
+Par.win  = 20;   % size of window around the patch
 Par.Outerloop = 8;
 Par.Innerloop = 2;
 Par.nlspini = 70;
 Par.display = 0;
-Par.delta = 0;
+Par.delta   = 0;
 Par.nlspgap = 0; %10
 Par.lambda1 = 0;
 Par.lambda2 = 3;
-% set Parameters
+
 % record all the results in each iteration
 Par.PSNR = zeros(Par.Outerloop, im_num*20, 'double');
 Par.SSIM = zeros(Par.Outerloop, im_num*20, 'double');
+alltime  = zeros(im_num, 1, 'double');
 for i = 1 :im_num
     Par.image = i;
     load(fullfile(Original_image_dir, im_dir(i).name));
