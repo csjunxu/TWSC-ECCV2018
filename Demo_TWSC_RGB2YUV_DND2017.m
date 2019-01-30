@@ -1,7 +1,7 @@
 %-------------------------------------------------------------------------------------------------------------
 % This is an implementation of the TWSC algorithm for real-world image denoising
 % by processing the YUV channels insead of RGB channels, it would improve
-% TWSC by at 0.1dB on PSNR.
+% TWSC by 0.1dB on PSNR.
 % Author:  Jun Xu, csjunxu@comp.polyu.edu.hk / nankaimathxujun@gmail.com
 %          The Hong Kong Polytechnic University
 %
@@ -47,7 +47,7 @@ for lambda2 = [3.2]
     % record all the results in each iteration
     Par.PSNR = zeros(Par.Outerloop, im_num*20, 'double');
     Par.SSIM = zeros(Par.Outerloop, im_num*20, 'double');
-    for i = 22:im_num
+    for i = 46:im_num
         Par.image = i;
         load(fullfile(Original_image_dir, im_dir(i).name));
         S = regexp(im_dir(i).name, '\.', 'split');
@@ -77,7 +77,8 @@ for lambda2 = [3.2]
     end
 end
 
-for lambda2 = [3.1]
+
+for lambda2 = [3.1 2.9]
     Par.lambda2 =lambda2;
     % record all the results in each iteration
     Par.PSNR = zeros(Par.Outerloop, im_num*20, 'double');

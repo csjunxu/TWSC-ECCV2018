@@ -1,7 +1,7 @@
 %-------------------------------------------------------------------------------------------------------------
 % This is an implementation of the TWSC algorithm for real-world image denoising
 % by processing the YUV channels insead of RGB channels, it would improve
-% TWSC by at 0.1dB on PSNR.
+% TWSC by 0.1dB on PSNR.
 % Author:  Jun Xu, csjunxu@comp.polyu.edu.hk / nankaimathxujun@gmail.com
 %          The Hong Kong Polytechnic University
 %

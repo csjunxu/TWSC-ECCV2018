@@ -8,7 +8,7 @@ for  i  =  1 : Par.lenrc
     [~,index]   =  sort(Dist);
     %% for synthetic noise
     blk_arr(:,i)        =  Par.NeighborIndex( index( 1:Par.nlsp ), i );
-    %% for realistic noisy
+    %% for realistic noise
     indc        =  Par.NeighborIndex( index( 1:Par.nlsp ), i );
     indc(indc == Par.SelfIndex(i)) = indc(1); % added on 08/01/2017
     indc(1) = Par.SelfIndex(i); % to make sure the first one of indc equals to off
