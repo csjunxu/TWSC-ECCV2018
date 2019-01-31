@@ -41,7 +41,7 @@ Par.nlspini = 70;   % initial number of patches
 Par.display = 0;    % 
 Par.delta   = 0;    % 
 Par.nlspgap = 0;    % 10
-Par.lambda1 = 0;    % 
+Par.lambda1 = 0;    % set this parameter positive to apply TWSC model
 Par.lambda2 = 3;    % parameter for estimating local noise level
 
 alltime  = zeros(im_num, 1, 'double');
