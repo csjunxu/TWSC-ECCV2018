@@ -1,12 +1,16 @@
 function  [C] =  TWSC_ADMM( Y, D, S, W1, W2, Par )
-% This routine solves the following weighted nuclear norm optimization problem with column weights,
+% This routine solves the following trilateral weighted sparse coding problem
 %
-% min |W1(Y-DSC)W2|_F,2 + |Z|_1 s.t.  C=Z
+% min_{C,Z} |W1(Y-DSC)W2|_F,2 + |Z|_1 s.t.  C=Z
+%
 % inputs:
 %        Y -- d*M data matrix, d is the data dimension, and M is the number
 %             of image patches.
 %        W1 -- d*d matrix of row weights
 %        W2 -- M*M matrix of column weights
+% outputs:
+%        C -- d*M data matrix, sparse coding coefficient matrix
+%        Z -- d*M data matrix, auxiliary variable, equal to C
 
 tol = 1e-8;
 Par.maxrho = 100;

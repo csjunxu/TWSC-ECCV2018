@@ -22,27 +22,28 @@ im_dir  = dir(fpath);
 im_num = length(im_dir);
 load '../dnd_2017/info.mat';
 
-method = 'TWSC';
+method = 'TWSCrgb2yuv';
 dataset = 'dnd_2017';
 % write image directory
-write_MAT_dir = ['../' dataset '_Results/'];
+%write_MAT_dir = ['../' dataset '_Results/'];
+write_MAT_dir = ['/home/csjunxu/Paper/DeNoise/Results_' dataset '/'];
 write_sRGB_dir = [write_MAT_dir method];
 if ~isdir(write_sRGB_dir)
     mkdir(write_sRGB_dir)
 end
 
 % set parameters
-Par.ps   = 6;       % patch size
+Par.ps   = 6;        % patch size
 Par.step = 3;       % the step of two neighbor patches
-Par.win  = 20;      % size of window around the patch
-Par.Outerloop = 8;  % iteration number of algorithm
-Par.Innerloop = 2;  % iteration number of block matching
-Par.nlspini = 70;   % initial number of patches
-Par.display = 0;    % 
-Par.delta   = 0;    % 
-Par.nlspgap = 0;    % 10
-Par.lambda1 = 0;    % 
-Par.lambda2 = 3;    % parameter for estimating local noise level
+Par.win  = 20;   % size of window around the patch
+Par.Outerloop = 8;
+Par.Innerloop = 2;
+Par.nlspini = 70;
+Par.display = 0;
+Par.delta   = 0;
+Par.nlspgap = 0; %10
+Par.lambda1 = 0;
+Par.lambda2 = 3;
 
 alltime  = zeros(im_num, 1, 'double');
 for i = 1 :im_num
@@ -59,19 +60,20 @@ for i = 1 :im_num
         Par.nim = InoisySRGB(bb(1):bb(3), bb(2):bb(4),:);
         Par.I = Par.nim;
         % noise estimation
-        for c = 1:ch
-            Par.nSig(c) = NoiseEstimation(Par.nim(:, :, c)*255, Par.ps)/255;
-        end
+        %for c = 1:ch
+        %    Par.nSig(c) = NoiseEstimation(Par.nim(:, :, c)*255, Par.ps)/255;
+        %end
         % initial PSNR and SSIM
         fprintf('%s: \n', IMinname);
         % denoising
         t1=clock;
-        [IMout, Par]  =  TWSC_Sigma_RW(Par);
+        %[IMout, Par]  =  TWSC_Sigma_RW(Par);
+        IMout = imread([write_sRGB_dir '/' method '_' dataset '_' num2str(Par.lambda2) '_' IMinname '.png']);
         t2=clock;
         % etime(t2,t1)
         alltime(Par.image)  = etime(t2, t1);
         %% output
-        IMoutname = sprintf([write_sRGB_dir '/' method '_' dataset '_' IMinname '.png']);
+        IMoutname = sprintf([write_sRGB_dir '/' method '_' dataset '_' num2str(Par.lambda2) '_' IMinname '.png']);
         imwrite(IMout, IMoutname);
         Idenoised_crop_bbs{j} = single(IMout);
     end
@@ -81,5 +83,3 @@ for i = 1 :im_num
     end
     fprintf('Image %d/%d done\n', i,50);
 end
-% generate submission files
-bundle_submission_srgb( write_MAT_dir );
