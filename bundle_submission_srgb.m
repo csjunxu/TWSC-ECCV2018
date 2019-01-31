@@ -11,9 +11,13 @@
 % Tobias Plötz and Stefan Roth, Benchmarking Denoising Algorithms with Real Photographs.
 % Please see the file LICENSE.txt for the license governing this code.
 
-function bundle_submission_srgb( submission_folder)
+function bundle_submission_srgb( submission_folder, para)
 
-out_folder = fullfile(submission_folder, 'bundled/');
+if nargin < 2
+    out_folder = fullfile(submission_folder, 'bundled/');
+else
+    out_folder = [submission_folder, 'bundled' num2str(para) '/'];
+end
 mkdir(out_folder);
 
 israw = false;
@@ -25,7 +29,7 @@ for i=1:50
         filename = sprintf('%04d_%02d.mat', i,b);
         s = load(fullfile(submission_folder, filename));
         
-        Idenoised{b} = s.Idenoised_crop;        
+        Idenoised{b} = s.Idenoised_crop;
     end
     filename = sprintf('%04d.mat', i);
     save(fullfile(out_folder, filename), 'Idenoised', 'israw', 'eval_version', '-v7.3');

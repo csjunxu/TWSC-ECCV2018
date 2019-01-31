@@ -13,7 +13,8 @@
 % 	year = {2018}
 % }
 %
-% Please see the file License.txt for the license governing this code.
+%-------------------------------------------------------------------------------------------------------------
+%%% This file will be deleted for clean coding!!!
 %-------------------------------------------------------------------------------------------------------------
 clear;
 Original_image_dir = '../dnd_2017/images_srgb/';
@@ -32,20 +33,6 @@ if ~isdir(write_sRGB_dir)
     mkdir(write_sRGB_dir)
 end
 
-% set parameters
-Par.ps   = 6;        % patch size
-Par.step = 3;       % the step of two neighbor patches
-Par.win  = 20;   % size of window around the patch
-Par.Outerloop = 8;
-Par.Innerloop = 2;
-Par.nlspini = 70;
-Par.display = 0;
-Par.delta   = 0;
-Par.nlspgap = 0; %10
-Par.lambda1 = 0;
-Par.lambda2 = 3;
-
-alltime  = zeros(im_num, 1, 'double');
 for i = 1 :im_num
     Par.image = i;
     load(fullfile(Original_image_dir, im_dir(i).name));
@@ -58,23 +45,7 @@ for i = 1 :im_num
         IMinname = [S{1} '_' num2str(j)];
         bb = info(i).boundingboxes(j,:);
         Par.nim = InoisySRGB(bb(1):bb(3), bb(2):bb(4),:);
-        Par.I = Par.nim;
-        % noise estimation
-        %for c = 1:ch
-        %    Par.nSig(c) = NoiseEstimation(Par.nim(:, :, c)*255, Par.ps)/255;
-        %end
-        % initial PSNR and SSIM
-        fprintf('%s: \n', IMinname);
-        % denoising
-        t1=clock;
-        %[IMout, Par]  =  TWSC_Sigma_RW(Par);
         IMout = imread([write_sRGB_dir '/' method '_' dataset '_' num2str(Par.lambda2) '_' IMinname '.png']);
-        t2=clock;
-        % etime(t2,t1)
-        alltime(Par.image)  = etime(t2, t1);
-        %% output
-        IMoutname = sprintf([write_sRGB_dir '/' method '_' dataset '_' num2str(Par.lambda2) '_' IMinname '.png']);
-        imwrite(IMout, IMoutname);
         Idenoised_crop_bbs{j} = single(IMout);
     end
     for j = 1:size(info(1).boundingboxes,1)
@@ -83,3 +54,5 @@ for i = 1 :im_num
     end
     fprintf('Image %d/%d done\n', i,50);
 end
+% generate submission files
+bundle_submission_srgb( write_MAT_dir );

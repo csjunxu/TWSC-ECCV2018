@@ -29,8 +29,8 @@ write_MAT_dir = ['/home/csjunxu/Paper/DeNoise/Results_' dataset '/'];
 write_sRGB_dir = [write_MAT_dir method];
 if ~isdir(write_sRGB_dir)
     mkdir(write_sRGB_dir)
-end  
-% Parameters   
+end
+% Parameters
 Par.ps = 6;        % patch size
 Par.step = 3;      % the step of two neighbor patches
 Par.win = 20;      % size of window around the patch
@@ -44,14 +44,13 @@ Par.lambda1 = 0;
 % Par.lambda2 = 3;
 for lambda2 = [3.1 2.9]
     Par.lambda2 =lambda2;
-    % record all the results in each iteration
-    Par.PSNR = zeros(Par.Outerloop, im_num*20, 'double');
-    Par.SSIM = zeros(Par.Outerloop, im_num*20, 'double');
     for i = 1:im_num
         Par.image = i;
         load(fullfile(Original_image_dir, im_dir(i).name));
         S = regexp(im_dir(i).name, '\.', 'split');
         [h,w,ch] = size(InoisySRGB);
+        % iterate over bounding boxes
+        Idenoised_crop_bbs = cell(1,20);
         for j = 1:size(info(1).boundingboxes,1)
             Par.nlsp = Par.nlspini;  % number of non-local patches
             IMinname = [S{1} '_' num2str(j)];
@@ -66,13 +65,17 @@ for lambda2 = [3.1 2.9]
             end
             [IMout, Par]  =  TWSC_Sigma_RW(Par);
             IMout = ycbcr2rgb(IMout);
-            % initial PSNR and SSIM
             fprintf('%s: \n', IMinname);
-            % calculate the PSNR
-            Par.PSNR(Par.Outerloop, Par.image)  =   csnr( IMout*255, Par.I*255, 0, 0 );
-            Par.SSIM(Par.Outerloop, Par.image)      =  cal_ssim( IMout*255, Par.I*255, 0, 0 );
             %% output
             imwrite(IMout, [write_sRGB_dir '/' method '_' dataset '_' num2str(lambda2) '_' IMinname '.png']);
+            Idenoised_crop_bbs{j} = single(IMout);
         end
+        for j = 1:size(info(1).boundingboxes,1)
+            Idenoised_crop = Idenoised_crop_bbs{j};
+            save(fullfile(write_MAT_dir, sprintf('%04d_%02d.mat', i, j)), 'Idenoised_crop');
+        end
+        fprintf('Image %d/%d done\n', i,50);
     end
+    % generate submission files
+    bundle_submission_srgb( write_MAT_dir, lambda2 );
 end
