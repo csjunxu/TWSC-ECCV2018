@@ -1,2 +1,9 @@
+31/01/2019 - 1.1
+- add function "Demo_RGB2Mat" to transform denoised image into mat files for
+  easier submission to the website of the DND dataset
+- add the submission function "bundle_submission_srgb" for easier usage
+- add poster of the paper
+- modify the "TWSC_ADMM" function
+
 13/07/2018 - 1.0
-- Initial release
+- initial release
