@@ -32,7 +32,7 @@ write_sRGB_dir = [write_MAT_dir method];
 if ~isdir(write_sRGB_dir)
     mkdir(write_sRGB_dir)
 end
-Par.lambda2 = 3;
+Par.lambda2 = 3.2;
 
 for i = 1 :im_num
     Par.image = i;
@@ -55,4 +55,4 @@ for i = 1 :im_num
     fprintf('Image %d/%d done\n', i,50);
 end
 % generate submission files
-bundle_submission_srgb( write_MAT_dir );
+bundle_submission_srgb( write_MAT_dir, Par.lambda2 );
