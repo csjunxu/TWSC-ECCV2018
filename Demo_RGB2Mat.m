@@ -32,6 +32,7 @@ write_sRGB_dir = [write_MAT_dir method];
 if ~isdir(write_sRGB_dir)
     mkdir(write_sRGB_dir)
 end
+Par.lambda2 = 3;
 
 for i = 1 :im_num
     Par.image = i;
@@ -41,11 +42,10 @@ for i = 1 :im_num
     % iterate over bounding boxes
     Idenoised_crop_bbs = cell(1,20);
     for j = 1:size(info(1).boundingboxes,1)
-        Par.nlsp = Par.nlspini;  % number of non-local patches
         IMinname = [S{1} '_' num2str(j)];
         bb = info(i).boundingboxes(j,:);
         Par.nim = InoisySRGB(bb(1):bb(3), bb(2):bb(4),:);
-        IMout = imread([write_sRGB_dir '/' method '_' dataset '_' num2str(Par.lambda2) '_' IMinname '.png']);
+        IMout = im2double(imread([write_sRGB_dir '/' method '_' dataset '_' num2str(Par.lambda2) '_' IMinname '.png']));
         Idenoised_crop_bbs{j} = single(IMout);
     end
     for j = 1:size(info(1).boundingboxes,1)
