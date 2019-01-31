@@ -10,7 +10,7 @@ The code in this package implements the Trilateral Weighted Sparse Coding Scheme
 Please cite the paper if you feel this code useful in your research.
 Please see the file License.txt for the license governing this code.
 
-  Version:       1.0 (13/07/2018), see ChangeLog.txt
+  Version:       1.1 (31/01/2019), see ChangeLog.txt
   Contact:       Jun Xu <csjunxu@comp.polyu.edu.hk, nankaimathxujun@gmail.com>
 
 
