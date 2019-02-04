@@ -42,9 +42,9 @@ Par.delta = 0;
 Par.nlspgap = 0; %10
 Par.lambda1 = 0;
 % Par.lambda2 = 3;
-for lambda2 = [2.9]
+for lambda2 = [3.1]
     Par.lambda2 =lambda2;
-    for i = 1:im_num
+    for i = 11:im_num
         Par.image = i;
         load(fullfile(Original_image_dir, im_dir(i).name));
         S = regexp(im_dir(i).name, '\.', 'split');
