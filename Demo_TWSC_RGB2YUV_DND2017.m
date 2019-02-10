@@ -44,7 +44,45 @@ Par.lambda1 = 0;
 % Par.lambda2 = 3;
 for lambda2 = [3.1]
     Par.lambda2 =lambda2;
-    for i = 11:im_num
+    for i = 19
+        Par.image = i;
+        load(fullfile(Original_image_dir, im_dir(i).name));
+        S = regexp(im_dir(i).name, '\.', 'split');
+        [h,w,ch] = size(InoisySRGB);
+        % iterate over bounding boxes
+        Idenoised_crop_bbs = cell(1,20);
+        for j = size(info(1).boundingboxes,1)
+            Par.nlsp = Par.nlspini;  % number of non-local patches
+            IMinname = [S{1} '_' num2str(j)];
+            bb = info(i).boundingboxes(j,:);
+            Par.nim = InoisySRGB(bb(1):bb(3), bb(2):bb(4),:);
+            Par.I = Par.nim;
+            Par.nim = rgb2ycbcr(Par.nim);
+            [h,w,ch] = size(Par.nim);
+            % noise estimation
+            for c = 1:ch
+                Par.nSig(c) = NoiseEstimation(Par.nim(:, :, c)*255, Par.ps)/255;
+            end
+            [IMout, Par]  =  TWSC_Sigma_RW(Par);
+            IMout = ycbcr2rgb(IMout);
+            fprintf('%s: \n', IMinname);
+            %% output
+            imwrite(IMout, [write_sRGB_dir '/' method '_' dataset '_' num2str(lambda2) '_' IMinname '.png']);
+            Idenoised_crop_bbs{j} = single(IMout);
+        end
+        for j = 1:size(info(1).boundingboxes,1)
+            Idenoised_crop = Idenoised_crop_bbs{j};
+            save(fullfile(write_MAT_dir, sprintf('%04d_%02d.mat', i, j)), 'Idenoised_crop');
+        end
+        fprintf('Image %d/%d done\n', i,50);
+    end
+    % generate submission files
+    bundle_submission_srgb( write_MAT_dir, lambda2 );
+end
+
+for lambda2 = [3.1]
+    Par.lambda2 =lambda2;
+    for i = 20:im_num
         Par.image = i;
         load(fullfile(Original_image_dir, im_dir(i).name));
         S = regexp(im_dir(i).name, '\.', 'split');
