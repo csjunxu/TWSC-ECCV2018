@@ -42,6 +42,7 @@ Par.nlspgap = 10;
 Par.lambda1 = 0;
 Par.lambda2 = 1; % set randomly as 1, different for each image
 % set Parameters
+alltime  = zeros(im_num, 1, 'double');
 for i = 1 : im_num
     Par.nlsp = Par.nlspini;  % number of non-local patches
     Par.image = i;
