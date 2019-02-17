@@ -22,11 +22,11 @@ for ite  =  1 : Par.Outerloop
             SigmaRow = (NY-Y).^2;
         end
     end
-    SigmaCol = Par.lambda2 * sqrt(abs(repmat(Par.Sigma^2, 1, size(Y,2)) - mean((NY - Y).^2))); %Estimated Local Noise Level
+    SigmaCol = Par.lambda2 * sqrt(abs(repmat(Par.Sigma^2, 1, size(Y,2)) - mean((NY - Y).^2))); % Estimated Local Noise Level
     % estimation of noise variance
     if mod(ite-1, Par.Innerloop)==0
         Par.nlsp = max(Par.nlspgap, Par.nlsp - Par.nlspgap);
-        % searching  non-local patches
+        % searching non-local patches
         blk_arr = Block_Matching_RW( Y, Par );
     end
     % Weighted Sparse Coding
