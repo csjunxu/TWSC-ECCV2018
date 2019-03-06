@@ -1,4 +1,4 @@
-function  [im_out, Par] = TWSC_Sigma_RW(Par)
+function  [im_out, Par] = TWSC_RW(Par)
 im_out     =   Par.nim;
 % parameters for noisy image
 [h,  w, ch] = size(im_out);
@@ -11,7 +11,7 @@ NY = Image2Patch( Par.nim, Par );
 Par.Sigma = sqrt(mean(Par.nSig.^2));
 for ite  =  1 : Par.Outerloop
     % iterative regularization
-    im_out = im_out + Par.delta * (Par.nim - im_out);
+    % im_out = im_out + Par.delta * (Par.nim - im_out);
     % image to patches
     Y = Image2Patch( im_out, Par );
     % estimate local noise variance, par.lambdals is put here since the MAP and Bayesian rules
@@ -38,27 +38,18 @@ for ite  =  1 : Par.Outerloop
         DC = mean(nlY, 2);
         nDCnlY = bsxfun(@minus, nlY, DC);
         % Compute W2
-        W2 = 1 ./ (SigmaCol(index) + eps); 
+        W2 = 1 ./ (SigmaCol(index) + eps);
         % update D
         [D, S, ~] = svd( full(nDCnlY), 'econ' );
         % update S
         S = sqrt(max( diag(S).^2 - length(index) * SigmaCol(index(1))^2, 0 ));
-        if Par.lambda1 == 0
-            % update weight for sparse coding
-            Wsc = bsxfun( @rdivide, SigmaCol(index).^2, S + eps );
-            % update C by soft thresholding
-            B = D' * nDCnlY;
-            C = sign(B) .* max( abs(B) - Wsc, 0 ); 
-            % update Y
-            nDCnlYhat = D * C;
-        else
-            W1 = exp( - Par.lambda1*mean(SigmaRow(:, index), 2)); % max?
-            S = diag(S);
-            % min |Z|_1 + |W1(Y-DSC)W2|_F,2  s.t.  C=Z
-            C = TWSC_ADMM( nDCnlY, D, S, W1, W2, Par );
-            % update Y
-            nDCnlYhat = D * S * C;
-        end
+        % update weight for sparse coding
+        Wsc = bsxfun( @rdivide, SigmaCol(index).^2, S + eps );
+        % update C by soft thresholding
+        B = D' * nDCnlY;
+        C = sign(B) .* max( abs(B) - Wsc, 0 );
+        % update Y
+        nDCnlYhat = D * C;
         % add back DC components
         nlYhat = bsxfun(@plus, nDCnlYhat, DC);
         % aggregation
