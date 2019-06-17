@@ -14,9 +14,11 @@ Please see the file License.txt for the license governing this code.
   Contact:       Jun Xu <csjunxu@comp.polyu.edu.hk, nankaimathxujun@gmail.com>
 
 
-Code
+Test
 ------------
-Code will be updated on https://github.com/csjunxu/TWSC-ECCV2018
+1. Run "Demo_TWSC_Sigma_AWGN.m" for Additive White Gaussian noise removal.
+2. Run "Demo_TWSC_Sigma_RW*.m" for Real-world noise removal.
+Note: Please set "Original_image_dir" according to your case.
 
 Data
 ------------
